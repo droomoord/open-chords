@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 //private
-//create progression
+//add a progression to a song
 router.post("/:songid", auth, async (req, res) => {
   try {
     const { chords, key } = req.body;
@@ -28,7 +28,9 @@ router.post("/:songid", auth, async (req, res) => {
       key,
       song: req.params.songid,
     });
-    const song = await Song.findById(req.params.songid);
+    const song = await Song.findById(req.params.songid).populate(
+      "progressions"
+    );
     song.progressions.push(progression._id);
     await song.save();
     res.json(song);

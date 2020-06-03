@@ -58,9 +58,4 @@ router.post("/auth", async (req, res) => {
   }
 });
 
-//dev
-router.post("/devtestauth", auth, (req, res) => {
-  res.send(req.user);
-});
-
 module.exports = router;
