@@ -60,4 +60,9 @@ private
 remove a progression, also in the progression array of the song  
 expects: a bearer token in the header that stores the same user as the user that is linked to the progID  
 returns the updated song
+
+**GET /progressions/:progID**  
+public  
+get a progression bases on the progID  
+returns the progression
     

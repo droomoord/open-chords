@@ -17,6 +17,21 @@ router.get("/", async (req, res) => {
   }
 });
 
+//public
+//get a specific progression based on progresion id
+router.get("/:id", async (req, res) => {
+  try {
+    let progression = await (
+      await Progression.findById(req.params.id)
+        .populate("user")
+        .populate("song")
+    ).execPopulate();
+    res.json(progression);
+  } catch (error) {
+    res.status(404).json({ error: { message: "Chord progression not found" } });
+  }
+});
+
 //private
 //add a progression to a song
 router.post("/:songid", auth, async (req, res) => {
