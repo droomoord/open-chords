@@ -29,9 +29,10 @@ router.get("/:id", (req, res) => {
 //private:
 //create a new song:
 router.post("/", auth, async (req, res) => {
-  console.log(req.user);
   try {
     const { title, artist, chords, key } = req.body;
+    if (!chords)
+      res.status(400).json({ error: { message: "please provide chords" } });
     const progression = await Progression.create({
       chords,
       key,
@@ -43,12 +44,30 @@ router.post("/", auth, async (req, res) => {
       progressions: progression._id,
       user: req.user._id,
     });
-    res.json({ song, progression });
+    const updatedUser = await song.populate("progressions").execPopulate();
+    res.json({ song });
   } catch (error) {
     res.status(400).json(error.message);
   }
 });
 
+//private
+//edit a song (title/artist)
+router.put("/:id", auth, async (req, res) => {
+  try {
+    const { title, artist } = req.body;
+    const song = await Song.findById(req.params.id);
+    if (req.user._id != song.user._id) {
+      return res
+        .status(403)
+        .json({ error: { message: "You don't own this song" } });
+    }
+    if (title) song.title = title;
+    if (artist) song.artist = artist;
+    const editedSong = await song.save();
+    res.json(editedSong);
+  } catch (error) {}
+});
 
 router.get("/dev/deleteall", async (req, res) => {
   try {
