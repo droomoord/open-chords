@@ -54,4 +54,10 @@ private
 edit a chord progression that you created  
 expects: a bearer token in the header that stores the same user as the user that is linked to the progID, JSON: key.root, key.minor(optionial boolean), chords.  
 returns the updated progression
+
+**DELETE /progressions/:progID/:songID**  
+private  
+remove a progression, also in the progression array of the song
+expects: a bearer token in the header that stores the same user as the user that is linked to the progID
+returns the updated song
     

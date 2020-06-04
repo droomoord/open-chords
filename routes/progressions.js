@@ -28,7 +28,9 @@ router.post("/:songid", auth, async (req, res) => {
       key,
       song: req.params.songid,
     });
-    const song = await Song.findById(req.params.songid).populate("progressions");;
+    const song = await Song.findById(req.params.songid).populate(
+      "progressions"
+    );
     song.progressions.push(progression);
     const updatedSong = await song.save();
     res.json(updatedSong);
@@ -57,6 +59,28 @@ router.put("/:progid", auth, async (req, res) => {
     res.json(editedProgression);
   } catch (error) {
     res.send(400).json(error.message);
+  }
+});
+
+//private
+//delete a progression (that you own) and also remove it from the song
+router.delete("/:progid/:songid", auth, async (req, res) => {
+  try {
+    if (req.user._id != progression.user._id) {
+      return res
+        .status(403)
+        .json({ error: { message: "You don't own this chord progression" } });
+    }
+    const song = await Song.findById(req.params.songid);
+    const removedProgression = await Progression.findByIdAndRemove(
+      req.params.progid
+    );
+    const index = song.progressions.indexOf(removedProgression._id);
+    if (index > -1) song.progressions.splice(index, 1);
+    const updatedSong = await song.save();
+    res.json(updatedSong);
+  } catch (error) {
+    console.log(error.message);
   }
 });
 
