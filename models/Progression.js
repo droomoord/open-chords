@@ -6,6 +6,10 @@ const progressionSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
+  song: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "song"
+  },
   chords: {
     type: Array,
     required: true,
@@ -20,10 +24,12 @@ const progressionSchema = new mongoose.Schema({
       default: false,
     },
   },
-  votes: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
-  },
+  votes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 });
 
 const Progression = mongoose.model("progression", progressionSchema);

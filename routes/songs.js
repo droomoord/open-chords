@@ -33,18 +33,21 @@ router.post("/", auth, async (req, res) => {
     const { title, artist, chords, key } = req.body;
     if (!chords)
       res.status(400).json({ error: { message: "please provide chords" } });
-    const progression = await Progression.create({
+    let progression = await Progression.create({
       chords,
       key,
       user: req.user._id,
     });
-    const song = await Song.create({
+    let song = await Song.create({
       title,
       artist,
       progressions: progression._id,
       user: req.user._id,
     });
-    const updatedUser = await song.populate("progressions").execPopulate();
+    progression = await Progression.findById(progression._id);
+    progression.song = song._id;
+    await progression.save();
+    await song.populate("progressions").execPopulate();
     res.json({ song });
   } catch (error) {
     res.status(400).json(error.message);
@@ -68,8 +71,6 @@ router.put("/:id", auth, async (req, res) => {
     res.json(editedSong);
   } catch (error) {}
 });
-
-
 
 router.get("/dev/deleteall", async (req, res) => {
   try {
