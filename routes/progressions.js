@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   try {
     const progressions = await Progression.find({})
       .populate({ path: "user", select: "name" })
-      .populate('song') 
+      .populate("song")
       .exec();
     res.json(progressions);
   } catch (error) {
@@ -46,9 +46,9 @@ router.post("/:songid", auth, async (req, res) => {
       key,
       song: req.params.songid,
     });
-    const song = await Song.findById(req.params.songid).populate(
-      "progressions"
-    );
+    const song = await Song.findById(req.params.songid)
+      .populate("progressions")
+      .populate({ path: "user", select: "name" });
     song.progressions.push(progression);
     const updatedSong = await song.save();
     res.json(updatedSong);
