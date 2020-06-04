@@ -14,6 +14,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  songs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "song",
+    },
+  ],
+  progressions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "progression",
+    },
+  ],
 });
 
 const Users = mongoose.model("user", userSchema);

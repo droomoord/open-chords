@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 
 const Song = require("../models/Song");
 const Progression = require("../models/Progression");
+const User = require("../models/User");
 
 //public:
 // get all songs
@@ -47,7 +48,13 @@ router.post("/", auth, async (req, res) => {
     progression = await Progression.findById(progression._id);
     progression.song = song._id;
     await progression.save();
+
     await song.populate("progressions").execPopulate();
+
+    const user = await User.findById(req.user._id);
+    user.songs.push(song._id);
+    user.progressions.push(progression._id);
+    await user.save();
     res.json({ song });
   } catch (error) {
     res.status(400).json(error.message);

@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 
 const Progression = require("../models/Progression");
 const Song = require("../models/Song");
+const User = require("../models/User");
 
 //public
 //get all progressions
@@ -21,7 +22,7 @@ router.get("/", async (req, res) => {
 });
 
 //public
-//get a specific progression based on progresion id
+//get a specific progression based on progression id
 router.get("/:id", async (req, res) => {
   try {
     const progression = await (
@@ -51,6 +52,11 @@ router.post("/:songid", auth, async (req, res) => {
       .populate({ path: "user", select: "name" });
     song.progressions.push(progression);
     const updatedSong = await song.save();
+
+    const user = await User.findById(req.user._id);
+    user.progressions.push(progression._id);
+    await user.save();
+
     res.json(updatedSong);
   } catch (error) {
     res.status(400).json(error.message);

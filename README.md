@@ -65,4 +65,18 @@ returns the updated song
 public  
 get a progression bases on the progID  
 returns the progression
+
+**GET /users/:id**  
+private  
+returns user with linked songs/progressions
+
+**GET /users/me**  
+private
+
+**PUT /songs/:id**  
+private  
+edit a song (title/artist) based on the :id  
+returns the song
+
+**
     

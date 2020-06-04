@@ -11,16 +11,18 @@ const User = require("../models/User");
 
 //public:
 //get all users
-router.get("/", (req, res) => {
-  User.find({}, (error, users) => {
-    if (error) res.json(error.message);
-    if (users) {
-      usernames = users.map((user) => {
-        return { name: user.name, _id: user._id };
-      });
-      res.json(usernames);
-    }
-  });
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find({})
+      .select(["name", "songs", "progressions"])
+      .populate([
+        { path: "songs", select: ["artist", "title"] },
+        { path: "progressions", select: ["key", "chords", "song"] },
+      ]);
+    res.json(users);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
 });
 
 //public:
@@ -41,8 +43,11 @@ router.post("/", async (req, res) => {
 //public:
 //authenticate user
 router.post("/auth", async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  if (!user)
+    res.status(400).json({ error: { message: "Wrong credentials..." } });
   const authenticated = await bcrypt.compare(password, user.password);
   if (authenticated) {
     const accessToken = jwt.sign(
@@ -55,6 +60,39 @@ router.post("/auth", async (req, res) => {
     res.json({ accessToken });
   } else {
     res.send("wrong credentials....");
+  }
+});
+
+//get my user data
+//private
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+      .select("name")
+      .populate([
+        { path: "songs", select: ["title", "artist"] },
+        "progressions",
+      ]);
+    res.json(user);
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+});
+
+//get user info
+//private
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .select("name")
+      .populate([
+        { path: "songs", select: ["title", "artist"] },
+        "progressions",
+      ]);
+    res.json(user);
+  } catch (error) {
+    res.status(404).json(error.message);
   }
 });
 
