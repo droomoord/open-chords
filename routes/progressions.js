@@ -10,7 +10,10 @@ const Song = require("../models/Song");
 //get all progressions
 router.get("/", async (req, res) => {
   try {
-    const progressions = await Progression.find({});
+    const progressions = await Progression.find({})
+      .populate({ path: "user", select: "name" })
+      .populate('song') 
+      .exec();
     res.json(progressions);
   } catch (error) {
     res.status(404).json(error.message);
@@ -21,7 +24,7 @@ router.get("/", async (req, res) => {
 //get a specific progression based on progresion id
 router.get("/:id", async (req, res) => {
   try {
-    let progression = await (
+    const progression = await (
       await Progression.findById(req.params.id)
         .populate({ path: "user", select: "name" })
         .populate("song")
