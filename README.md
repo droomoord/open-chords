@@ -46,4 +46,12 @@ private
 add a chord progression to a song with the songID  
 expects: a bearer token in the header, JSON: key.root, key.minor(optionial boolean), chords  
 returns the song with the progression objects
+
+## 04-05-2020 update:  
+
+**PUT /progressions/:progID**
+private
+edit a chord progression that you created
+expects: a bearer token in the header that stores the same user as the user that is linked to the progID, JSON: key.root, key.minor(optionial boolean), chords.
+returns the updated progression
     

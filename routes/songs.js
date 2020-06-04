@@ -10,7 +10,7 @@ const Progression = require("../models/Progression");
 // get all songs
 router.get("/", (req, res) => {
   Song.find({}, (error, songs) => {
-    if (error) res.json(error.message);
+    if (error) res.status(404).json(error.message);
     if (songs) res.json(songs);
   });
 });
@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
   Song.findById(req.params.id)
     .populate("progressions")
     .exec((error, song) => {
-      if (error) res.json(error.message);
+      if (error) res.status(404).json(error.message);
       if (song) res.json(song);
     });
 });
@@ -45,18 +45,10 @@ router.post("/", auth, async (req, res) => {
     });
     res.json({ song, progression });
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
   }
 });
 
-//development:
-//create songs
-router.post("/dev/:title", (req, res) => {
-  Song.create({ title: req.params.title }, (error, song) => {
-    if (error) res.json({ error: error.message });
-    if (song) res.json(song);
-  });
-});
 
 router.get("/dev/deleteall", async (req, res) => {
   try {

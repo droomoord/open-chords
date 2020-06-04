@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
     const progressions = await Progression.find({});
     res.json(progressions);
   } catch (error) {
-    res.json(error.message);
+    res.status(404).json(error.message);
   }
 });
 
@@ -35,7 +35,30 @@ router.post("/:songid", auth, async (req, res) => {
     await song.save();
     res.json(song);
   } catch (error) {
-    res.json(error.message);
+    res.status(400).json(error.message);
+  }
+});
+
+//------------------------------------------------------------------------------------
+//04-05-2020
+
+//private
+//edit a progression (that you own)
+router.put("/:progid", auth, async (req, res) => {
+  try {
+    const { key, chords } = req.body;
+    const progression = await Progression.findById(req.params.progid);
+    if (req.user._id != progression.user._id) {
+      return res
+        .status(403)
+        .json({ error: { message: "You don't own this chord progression" } });
+    }
+    if (key) progression.key = key;
+    if (chords) progression.chords = chords;
+    const editedProgression = await progression.save();
+    res.json(editedProgression);
+  } catch (error) {
+    res.send(400).json(error.message);
   }
 });
 
