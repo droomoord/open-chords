@@ -39,7 +39,7 @@ returns the song object and the progression object
 **GET /progressions**  
 public  
 get all the chord progressions  
-returns all progressions (no relation to songs, but every song has relations to progressions)
+returns all progressions
 
 **POST /progressions/:songID**  
 private  
@@ -55,9 +55,9 @@ edit a chord progression that you created
 expects: a bearer token in the header that stores the same user as the user that is linked to the progID, JSON: key.root, key.minor(optionial boolean), chords.  
 returns the updated progression
 
-**DELETE /progressions/:progID/:songID**  
+**DELETE /progressions/:progID**  
 private  
-remove a progression, also in the progression array of the song  
+remove a progression, also in the progression array of the linked song  
 expects: a bearer token in the header that stores the same user as the user that is linked to the progID  
 returns the updated song
 
