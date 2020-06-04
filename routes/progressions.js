@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   try {
     let progression = await (
       await Progression.findById(req.params.id)
-        .populate("user")
+        .populate({ path: "user", select: "name" })
         .populate("song")
     ).execPopulate();
     res.json(progression);
