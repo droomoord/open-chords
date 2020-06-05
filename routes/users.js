@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const auth = require("../middleware/auth");
+const upperCase = require("../functions/upperCase");
 
 const User = require("../models/User");
 
@@ -32,8 +33,28 @@ router.post("/", async (req, res) => {
     const { email, password, name } = req.body;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const user = await User.create({ email, name, password: hash });
-    res.json(user);
+    const user = await User.create({
+      email,
+      name: upperCase(name),
+      password: hash,
+    });
+    if (user) {
+      const accessToken = jwt.sign(
+        { email: user.email, name: user.name, _id: user._id },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
+
+      res.json({
+        user: {
+          name: user.name,
+          email: user.email,
+        },
+        accessToken,
+      });
+    }
   } catch (error) {
     console.log(error);
     res.send(error.message);
@@ -43,9 +64,12 @@ router.post("/", async (req, res) => {
 //public:
 //authenticate user
 router.post("/auth", async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select([
+    "email",
+    "password",
+    "name",
+  ]);
   if (!user)
     res.status(400).json({ error: { message: "Wrong credentials..." } });
   const authenticated = await bcrypt.compare(password, user.password);
@@ -57,9 +81,16 @@ router.post("/auth", async (req, res) => {
         expiresIn: "24h",
       }
     );
-    res.json({ accessToken });
+
+    res.json({
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      accessToken,
+    });
   } else {
-    res.send("wrong credentials....");
+    res.status(400).json({ error: { message: "Wrong credentials..." } });
   }
 });
 
@@ -69,7 +100,7 @@ router.post("/auth", async (req, res) => {
 router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
-      .select("name")
+      .select(["name", "email"])
       .populate([
         { path: "songs", select: ["title", "artist"] },
         "progressions",
