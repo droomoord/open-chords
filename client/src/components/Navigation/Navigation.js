@@ -1,24 +1,41 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import Login from "../Login/Login";
+import Logout from "../Logout/Logout";
+import Register from "../Register/Register";
 
 import Usercontext from "../../context/UserContext";
 
-const Navigation = () => {
-  const user = useContext(Usercontext);
+import "../../css/Navigation.css";
+
+const Navigation = (props) => {
+  const { user } = useContext(Usercontext);
+  const navLinks = [
+    { name: "Browse", to: "/browse" },
+    { name: "My Songs", to: "/mysongs" },
+  ];
   return (
-    <div>
-      {user.loggedIn ? (
-        <div style={{ float: "right" }}>Logged in as: {user.name}</div>
-      ) : null}
-      <ul>
-        <li>
-          <Link to="/browse">Browse</Link>
-        </li>
-        <li>
-          <Link to="/mysongs">My songs</Link>
-        </li>
-      </ul>
-    </div>
+    <nav className="navbar">
+      {navLinks.map((link, index) => {
+        return (
+          <li>
+            <NavLink
+              className="navbar-link"
+              to={link.to}
+              activeClassName="selected"
+            >
+              {link.name}
+            </NavLink>
+          </li>
+        );
+      })}
+      <div className="navbar-info">
+        {user.loggedIn ? <span>Logged in as: {user.name}</span> : null}
+        {!user.loggedIn ? <Login /> : <Logout />}
+        {!user.loggedIn ? <Register /> : null}
+      </div>
+    </nav>
   );
 };
 

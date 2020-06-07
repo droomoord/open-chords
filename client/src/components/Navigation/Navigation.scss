@@ -1,0 +1,47 @@
+@import "../../scss-config/variables";
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  background-color: $light-color;
+  height: 70px;
+  width: 100%;
+  padding-left: 100px;
+  color: rgb(77, 77, 77);
+
+  &-link {
+    display: block;
+    border-bottom: 7px solid transparent;
+    padding: 25px;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+    font-weight: bold;
+  }
+
+  &-link:hover {
+    border-bottom: 7px solid lighten($dark-color, 20%);
+    color: black;
+  }
+
+  .selected {
+    border-bottom: 7px solid lighten($dark-color, 20%);
+    color: black;
+  }
+
+  &-info {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+
+    button {
+      cursor: pointer;
+      margin-right: 20px;
+      height: 100%;
+    }
+    button:hover {
+      color: black;
+    }
+  }
+}

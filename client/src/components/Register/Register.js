@@ -1,60 +1,44 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+
+import RegisterFields from "./RegisterFields/RegisterFields";
+
+import Usercontext from "../../context/UserContext";
 
 const Register = (props) => {
-  const [registerFields, setRegisterFields] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
-  const [showRegisterFields, setShowRegisterFields] = useState(false);
-  return (
-    <div>
-      <button onClick={() => setShowRegisterFields(!showRegisterFields)}>
-        Register
-      </button>
-      {showRegisterFields ? (
-        <form
-          style={{ display: "inline" }}
-          onSubmit={(e) => props.submitted(e, registerFields)}
-          onChange={(e) =>
-            setRegisterFields({
-              ...registerFields,
-              [e.target.name]: e.target.value,
-            })
-          }
-        >
-          <input
-            type="text"
-            name="name"
-            placeholder="Your name, or nickname"
-            value={registerFields.name}
-            autoComplete="none"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={registerFields.email}
-            autoComplete="none"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={registerFields.password}
-          />
-          <input
-            type="password"
-            name="password2"
-            placeholder="Verify your password"
-            value={registerFields.password2}
-          />
+  const { setuser } = useContext(Usercontext);
 
-          <input type="submit" />
-        </form>
-      ) : null}
-    </div>
+  const tryRegister = async (e, registerFields) => {
+    try {
+      e.preventDefault();
+      if (registerFields.password !== registerFields.password2) {
+        alert("Passwords do not match");
+        return;
+      }
+      const { data } = await axios({
+        method: "post",
+        url: "/users",
+        data: registerFields,
+      });
+      setuser({ ...data.user, loggedIn: true });
+      Cookies.set("jwt", data.accessToken, { expires: 7 });
+    } catch (error) {
+      if (error.response.data.error) {
+        alert(error.response.data.error.message);
+      } else {
+        console.log(error);
+        alert(
+          "Something went wrong... Please let me know at: heijnenkris@gmail.com"
+        );
+      }
+    }
+  };
+
+  return (
+    <RegisterFields
+      tryRegister={(e, registerFields) => tryRegister(e, registerFields)}
+    />
   );
 };
 

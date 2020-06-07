@@ -30,10 +30,15 @@ router.get("/", async (req, res) => {
 //create new user:
 router.post("/", async (req, res) => {
   try {
+    let user = await User.findOne({ email: req.body.email });
+    if (user)
+      res
+        .status(400)
+        .json({ error: { message: "Email already exists in the database!" } });
     const { email, password, name } = req.body;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const user = await User.create({
+    user = await User.create({
       email,
       name: upperCase(name),
       password: hash,
@@ -56,8 +61,7 @@ router.post("/", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    res.send(error.message);
+    res.status(400).json({ error: { message: "Something went wrong..." } });
   }
 });
 
@@ -124,6 +128,18 @@ router.get("/:id", auth, async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(404).json(error.message);
+  }
+});
+
+//dev
+//delete all users
+
+router.get("/dev/deleteall", async (req, res) => {
+  try {
+    await User.deleteMany({});
+    res.send("users deleted");
+  } catch (error) {
+    console.log(error);
   }
 });
 

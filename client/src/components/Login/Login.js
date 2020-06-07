@@ -1,40 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+
+import LoginFields from "./LoginFields/LoginFields";
+
+import Usercontext from "../../context/UserContext";
 
 const Login = (props) => {
-  const [loginFields, setLoginFields] = useState({
-    email: "",
-    password: "",
-  });
-  const [showLoginFields, setShowLoginFields] = useState(false);
+  const { setuser } = useContext(Usercontext);
+
+  const tryLogin = async (e, loginFields) => {
+    try {
+      e.preventDefault();
+      if (!loginFields.email || !loginFields.password) {
+        alert("please provide an email and a password");
+        return;
+      }
+      const { data } = await axios({
+        method: "post",
+        url: "/users/auth",
+        data: loginFields,
+      });
+      Cookies.set("jwt", data.accessToken, { expires: 7 });
+      setuser({ ...data.user, loggedIn: true });
+    } catch (error) {
+      alert(error.response.data.error.message);
+    }
+  };
+
   return (
-    <div>
-      <button onClick={() => setShowLoginFields(!showLoginFields)}>
-        Login
-      </button>
-      {showLoginFields ? (
-        <form
-          style={{ display: "inline" }}
-          onSubmit={(e) => props.submitted(e, loginFields)}
-          onChange={(e) =>
-            setLoginFields({ ...loginFields, [e.target.name]: e.target.value })
-          }
-        >
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={loginFields.email}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={loginFields.password}
-          />
-          <input type="submit" />
-        </form>
-      ) : null}
-    </div>
+    <LoginFields tryLogin={(e, loginFields) => tryLogin(e, loginFields)} />
   );
 };
 
