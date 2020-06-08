@@ -1,5 +1,7 @@
 import React, { useState, Fragment } from "react";
 
+import Modal from "../../utility/Modal/Modal";
+
 const RegisterFields = (props) => {
   const { tryRegister } = props;
   const [registerFields, setRegisterFields] = useState({
@@ -16,44 +18,47 @@ const RegisterFields = (props) => {
         Register
       </button>
       {showRegisterFields ? (
-        <form
-          onSubmit={(e) => tryRegister(e, registerFields)}
-          onChange={(e) =>
-            setRegisterFields({
-              ...registerFields,
-              [e.target.name]: e.target.value,
-            })
-          }
-        >
-          <input
-            type="text"
-            name="name"
-            placeholder="Your name, or nickname"
-            value={registerFields.name}
-            autoComplete="none"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={registerFields.email}
-            autoComplete="none"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={registerFields.password}
-          />
-          <input
-            type="password"
-            name="password2"
-            placeholder="Verify your password"
-            value={registerFields.password2}
-          />
+        <Modal slideFade clickedExit={() => setShowRegisterFields(false)}>
+          <form
+            className="form"
+            onSubmit={(e) => tryRegister(e, registerFields)}
+            onChange={(e) =>
+              setRegisterFields({
+                ...registerFields,
+                [e.target.name]: e.target.value,
+              })
+            }
+          >
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name, or nickname"
+              value={registerFields.name}
+              autoComplete="none"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={registerFields.email}
+              autoComplete="none"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={registerFields.password}
+            />
+            <input
+              type="password"
+              name="password2"
+              placeholder="Verify your password"
+              value={registerFields.password2}
+            />
 
-          <input type="submit" />
-        </form>
+            <input type="submit" />
+          </form>
+        </Modal>
       ) : null}
     </Fragment>
   );

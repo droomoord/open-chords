@@ -1,0 +1,31 @@
+@import "../../../scss-config/variables";
+
+.dropdown {
+  position: absolute;
+  top: 70px;
+  z-index: 200;
+  right: -10px;
+  width: 130px;
+  color: lighten($dark-color, 30%);
+  border-radius: 5px;
+  background-color: $dark-color;
+  li {
+    background-color: $dark-color;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    &:hover {
+      background-color: lighten($dark-color, 5%);
+      color: lighten($dark-color, 40%);
+    }
+  }
+  animation-name: drop-down;
+  animation-duration: 0.3s;
+}
+
+@keyframes drop-down {
+  from {
+    opacity: 0;
+  }
+}

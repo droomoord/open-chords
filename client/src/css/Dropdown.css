@@ -1,0 +1,31 @@
+.dropdown {
+  position: absolute;
+  top: 70px;
+  z-index: 200;
+  right: -10px;
+  width: 130px;
+  color: #a9a2cc;
+  border-radius: 5px;
+  background-color: #564c89;
+  animation-name: drop-down;
+  animation-duration: 0.3s;
+}
+
+.dropdown li {
+  background-color: #564c89;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdown li:hover {
+  background-color: #605599;
+  color: #c8c3de;
+}
+
+@keyframes drop-down {
+  from {
+    opacity: 0;
+  }
+}

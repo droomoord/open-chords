@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import Login from "../Login/Login";
-import Logout from "../Logout/Logout";
 import Register from "../Register/Register";
+import Account from "../Account/Account";
 
 import Usercontext from "../../context/UserContext";
 
@@ -19,7 +19,7 @@ const Navigation = (props) => {
     <nav className="navbar">
       {navLinks.map((link, index) => {
         return (
-          <li>
+          <li key={index}>
             <NavLink
               className="navbar-link"
               to={link.to}
@@ -31,8 +31,8 @@ const Navigation = (props) => {
         );
       })}
       <div className="navbar-info">
-        {user.loggedIn ? <span>Logged in as: {user.name}</span> : null}
-        {!user.loggedIn ? <Login /> : <Logout />}
+        {user.loggedIn ? <Account username={user.name} /> : null}
+        {!user.loggedIn ? <Login /> : null}
         {!user.loggedIn ? <Register /> : null}
       </div>
     </nav>

@@ -1,0 +1,29 @@
+$width: 700px;
+
+.modal {
+  position: fixed;
+  display: block;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: $width;
+  left: 50%;
+  margin-left: calc(-#{$width} / 2);
+  top: 30vh;
+  padding: 40px;
+  z-index: 200;
+}
+
+.slide-fade {
+  animation-name: slide-fade;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slide-fade {
+  from {
+    left: 100vw;
+    top: 0;
+    opacity: 0;
+  }
+}
