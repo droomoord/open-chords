@@ -1,0 +1,50 @@
+.sidebar {
+  width: 38.2vw;
+  height: 100vh;
+  background-color: #564c89;
+}
+
+.sidebar.close {
+  transition: 0.3s;
+  width: 70px;
+}
+
+.sidebar.open {
+  transition: 0.3s;
+  width: 38.2vw;
+}
+
+.sidebar .pointer-icon {
+  background-color: #8b82b9;
+  color: #fff;
+  border-radius: 50%;
+  float: right;
+  margin: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebar .pointer-icon.point-left {
+  transform: rotate(0);
+  transition: 1s;
+}
+
+.sidebar .pointer-icon.point-right {
+  transform: rotate(180deg);
+  transition: 1s;
+}
+
+.sidebar .pointer-icon:hover {
+  background-color: #948bbf;
+  animation-name: point;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes point {
+  to {
+    padding-left: 5px;
+  }
+}

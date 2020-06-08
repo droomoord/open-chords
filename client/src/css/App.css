@@ -31,3 +31,8 @@ a:focus {
   outline: 0;
   border: none;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}

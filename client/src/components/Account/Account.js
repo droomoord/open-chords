@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import Logout from "../Logout/Logout";
 import Dropdown from "../utility/Dropdown/Dropdown";
 import Backdrop from "../utility/Backdrop/Backdrop";
 
@@ -19,7 +18,6 @@ const Account = (props) => {
               { name: "My Account", to: "/account" },
               { name: "My Songs", to: "/mysongs" },
               { name: "My Chords", to: "/mychords" },
-              { name: "Log Out", to: "./logout" },
             ]}
             clicked={() => setShowDropdown(false)}
           />

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./css/App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 import Navigation from "./components/Navigation/Navigation";
+import Sidebar from "./components/Sidebar/Sidebar";
 import Browse from "./components/Pages/Browse";
 import MySongs from "./components/Pages/MySongs";
-import Logout from "./components/functions/Logout";
 
 import UserContext from "./context/UserContext";
 
@@ -37,16 +42,27 @@ const App = () => {
     if (jwt) getUser();
   }, []);
 
+  const logout = () => {
+    Cookies.remove("jwt");
+    setuser({
+      loggedIn: false,
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <div className="App">
       <Router>
-        <UserContext.Provider value={{ user, setuser }}>
+        <UserContext.Provider value={{ user, setuser, logout }}>
           <Navigation />
-          <Switch>
-            <Route exact path="/browse" component={Browse} />
-            <Route exact path="/mysongs" component={MySongs} />
-            <Route exact path="/logout" component={Logout} />
-          </Switch>
+          <div className="flex-row">
+            <Sidebar />
+            <Switch>
+              <Route exact path="/browse" component={Browse} />
+              <Route exact path="/mysongs" component={MySongs} />
+            </Switch>
+          </div>
         </UserContext.Provider>
       </Router>
     </div>
