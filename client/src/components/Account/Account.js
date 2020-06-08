@@ -18,7 +18,10 @@ const Account = (props) => {
             links={[
               { name: "My Account", to: "/account" },
               { name: "My Songs", to: "/mysongs" },
+              { name: "My Chords", to: "/mychords" },
+              { name: "Log Out", to: "./logout" },
             ]}
+            clicked={() => setShowDropdown(false)}
           />
           <Backdrop hidden clicked={() => setShowDropdown(false)} />
         </Fragment>

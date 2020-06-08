@@ -2,7 +2,6 @@
   position: fixed;
   display: block;
   background-color: white;
-  border: 1px solid black;
   border-radius: 5px;
   width: 700px;
   left: 50%;
@@ -14,14 +13,13 @@
 
 .slide-fade {
   animation-name: slide-fade;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
   animation-fill-mode: forwards;
 }
 
 @keyframes slide-fade {
   from {
     left: 100vw;
-    top: 0;
     opacity: 0;
   }
 }

@@ -8,5 +8,13 @@
   height: 100vh;
   &.hidden {
     background-color: transparent;
+    animation: none;
+  }
+  animation: appear 1s;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
   }
 }

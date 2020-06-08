@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import Navigation from "./components/Navigation/Navigation";
 import Browse from "./components/Pages/Browse";
 import MySongs from "./components/Pages/MySongs";
+import Logout from "./components/functions/Logout";
 
 import UserContext from "./context/UserContext";
 
@@ -44,6 +45,7 @@ const App = () => {
           <Switch>
             <Route exact path="/browse" component={Browse} />
             <Route exact path="/mysongs" component={MySongs} />
+            <Route exact path="/logout" component={Logout} />
           </Switch>
         </UserContext.Provider>
       </Router>

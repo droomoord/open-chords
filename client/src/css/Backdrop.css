@@ -6,8 +6,16 @@
   background-color: rgba(18, 18, 18, 0.664);
   width: 100vw;
   height: 100vh;
+  animation: appear 1s;
 }
 
 .backdrop.hidden {
   background-color: transparent;
+  animation: none;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
 }

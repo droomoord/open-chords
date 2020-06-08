@@ -4,7 +4,6 @@ $width: 700px;
   position: fixed;
   display: block;
   background-color: white;
-  border: 1px solid black;
   border-radius: 5px;
   width: $width;
   left: 50%;
@@ -16,14 +15,13 @@ $width: 700px;
 
 .slide-fade {
   animation-name: slide-fade;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
   animation-fill-mode: forwards;
 }
 
 @keyframes slide-fade {
   from {
     left: 100vw;
-    top: 0;
     opacity: 0;
   }
 }

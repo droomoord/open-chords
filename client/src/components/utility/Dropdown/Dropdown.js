@@ -8,7 +8,7 @@ const Dropdown = (props) => {
     <div className="dropdown">
       {props.links.map((link) => {
         return (
-          <li>
+          <li onClick={props.clicked}>
             <Link to={link.to}>{link.name}</Link>
           </li>
         );
