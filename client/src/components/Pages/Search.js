@@ -2,11 +2,12 @@ import React from "react";
 
 import "../../css/Song.css";
 
-const Browse = (props) => {
+const Search = () => {
   return (
     <div className="song">
-      <h1>Browse:</h1>
+      <h1>Search:</h1>
     </div>
   );
 };
-export default Browse;
+
+export default Search;

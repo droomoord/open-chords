@@ -21,12 +21,12 @@
   }
 
   &-link:hover {
-    border-bottom: 7px solid lighten($dark-color, 20%);
+    border-bottom: 7px solid $dark-color;
     color: black;
   }
 
   .selected {
-    border-bottom: 7px solid lighten($dark-color, 20%);
+    border-bottom: 7px solid $dark-color;
     color: black;
   }
 

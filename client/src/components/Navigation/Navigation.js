@@ -11,13 +11,14 @@ import "../../css/Navigation.css";
 
 const Navigation = (props) => {
   const { user } = useContext(Usercontext);
-  const navLinks = [
-    { name: "Browse", to: "/browse" },
-    { name: "My Songs", to: "/mysongs" },
-  ];
+
   return (
     <nav className="navbar">
-      {navLinks.map((link, index) => {
+      {[
+        { name: "Browse", to: "/browse" },
+        { name: "Search", to: "/search" },
+        { name: "Add Song", to: "/addsong" },
+      ].map((link, index) => {
         return (
           <li key={index}>
             <NavLink

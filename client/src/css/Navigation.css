@@ -20,12 +20,12 @@
 }
 
 .navbar-link:hover {
-  border-bottom: 7px solid #8b82b9;
+  border-bottom: 7px solid #564c89;
   color: black;
 }
 
 .navbar .selected {
-  border-bottom: 7px solid #8b82b9;
+  border-bottom: 7px solid #564c89;
   color: black;
 }
 

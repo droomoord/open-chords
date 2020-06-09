@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "babyk";
+  src: url("./BABYK.TTF") format("ttf");
+}
+
+h1 {
+  font-family: "babyk" !important;
+}

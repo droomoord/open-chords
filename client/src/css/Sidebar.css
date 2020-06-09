@@ -1,20 +1,42 @@
 .sidebar {
-  width: 38.2vw;
+  width: 400px;
   height: 100vh;
   background-color: #564c89;
+  padding-left: 20px;
 }
 
 .sidebar.close {
   transition: 0.3s;
-  width: 70px;
+  margin-left: -300px;
 }
 
 .sidebar.open {
   transition: 0.3s;
-  width: 38.2vw;
+  margin-left: 0;
 }
 
-.sidebar .pointer-icon {
+.sidebar input[type="text"] {
+  margin-top: 20px;
+  font-size: 1em;
+}
+
+.sidebar input:nth-of-type(1) {
+  margin-top: 30px;
+}
+
+.sidebar button {
+  margin-top: 20px;
+  background-color: #8b82b9;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.sidebar .pointer-container {
+  width: 100%;
+  height: 100px;
+}
+
+.sidebar .pointer-container .pointer-icon {
   background-color: #8b82b9;
   color: #fff;
   border-radius: 50%;
@@ -26,17 +48,17 @@
   cursor: pointer;
 }
 
-.sidebar .pointer-icon.point-left {
+.sidebar .pointer-container .pointer-icon.point-left {
   transform: rotate(0);
-  transition: 1s;
+  transition: 0.8s;
 }
 
-.sidebar .pointer-icon.point-right {
+.sidebar .pointer-container .pointer-icon.point-right {
   transform: rotate(180deg);
-  transition: 1s;
+  transition: 0.8s;
 }
 
-.sidebar .pointer-icon:hover {
+.sidebar .pointer-container .pointer-icon:hover {
   background-color: #948bbf;
   animation-name: point;
   animation-duration: 0.5s;

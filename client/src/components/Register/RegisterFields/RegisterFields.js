@@ -34,14 +34,14 @@ const RegisterFields = (props) => {
               name="name"
               placeholder="Your name, or nickname"
               value={registerFields.name}
-              autoComplete="none"
+              autoComplete="off"
             />
             <input
               type="email"
               name="email"
               placeholder="Email"
               value={registerFields.email}
-              autoComplete="none"
+              autoComplete="off"
             />
             <input
               type="password"

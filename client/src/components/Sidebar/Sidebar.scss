@@ -1,46 +1,70 @@
 @import "../../scss-config/variables";
 
 .sidebar {
-  width: 38.2vw;
+  width: 400px;
   height: 100vh;
   background-color: $dark-color;
+  padding-left: 20px;
 
   &.close {
     transition: 0.3s;
-    width: 70px;
+    margin-left: -300px;
+    // width: 70px;
   }
 
   &.open {
     transition: 0.3s;
-    width: 38.2vw;
+    margin-left: 0;
+    // width: 38.2vw;
   }
 
-  .pointer-icon {
+  input[type="text"] {
+    margin-top: 20px;
+    font-size: 1em;
+  }
+
+  input:nth-of-type(1) {
+    margin-top: 30px;
+  }
+
+  button {
+    margin-top: 20px;
     background-color: lighten($dark-color, 20%);
-    color: #fff;
-    border-radius: 50%;
-    float: right;
-    margin: 20px;
-    width: 40px;
-    height: 40px;
-    padding: 10px;
     cursor: pointer;
+    padding: 10px;
+  }
 
-    &.point-left {
-      transform: rotate(0);
-      transition: 1s;
-    }
+  .pointer-container {
+    width: 100%;
+    height: 100px;
 
-    &.point-right {
-      transform: rotate(180deg);
-      transition: 1s;
-    }
+    .pointer-icon {
+      background-color: lighten($dark-color, 20%);
+      color: #fff;
+      border-radius: 50%;
+      float: right;
+      margin: 20px;
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      cursor: pointer;
 
-    &:hover {
-      background-color: lighten($dark-color, 23%);
-      animation-name: point;
-      animation-duration: 0.5s;
-      animation-iteration-count: infinite;
+      &.point-left {
+        transform: rotate(0);
+        transition: 0.8s;
+      }
+
+      &.point-right {
+        transform: rotate(180deg);
+        transition: 0.8s;
+      }
+
+      &:hover {
+        background-color: lighten($dark-color, 23%);
+        animation-name: point;
+        animation-duration: 0.5s;
+        animation-iteration-count: infinite;
+      }
     }
   }
 }
